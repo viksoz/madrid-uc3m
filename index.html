@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#16213d">
+<title>Lettre</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 40'%3E%3Crect x='2' y='2' width='28' height='36' fill='%231f3f95'/%3E%3Crect x='6' y='6' width='20' height='28' fill='none' stroke='%23fff' stroke-width='1.5'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&display=swap">
+<style>
+:root{
+  --nuit:#16213d;        /* fond : vol de nuit */
+  --pelure:#e9eef4;      /* papier par avion */
+  --blanc:#fbfaf6;       /* timbres, bandes, billet */
+  --encre:#1b2446;       /* encre bleu-noir */
+  --encre-pale:#56607c;
+  --rouge:#c62a3c;       /* rouge par avion */
+  --bleu:#1f3f95;        /* bleu par avion */
+  --serif:"Libre Caslon Text",Georgia,"Times New Roman",serif;
+  --etroit:"Barlow Condensed","Arial Narrow","Roboto Condensed",sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0}
+html{background:var(--nuit);-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{
+  min-height:100vh;min-height:100dvh;
+  display:flex;align-items:center;justify-content:center;
+  padding:max(20px,env(safe-area-inset-top)) 10px max(20px,env(safe-area-inset-bottom));
+  font:400 clamp(1.0625rem,.95rem + .5vw,1.25rem)/1.65 var(--serif);
+  color:var(--encre);
+}
+main{width:min(100%,38rem)}
+
+/* La lettre : le liseré par avion est le seul ornement */
+.lettre{
+  padding:9px;border-radius:3px;
+  background:repeating-linear-gradient(-45deg,var(--rouge) 0 15px,var(--pelure) 15px 22px,var(--bleu) 22px 37px,var(--pelure) 37px 44px);
+  box-shadow:0 34px 60px -30px rgba(0,0,0,.8),0 12px 24px -16px rgba(0,0,0,.55);
+}
+.feuille{background:var(--pelure);padding:clamp(18px,5vw,40px) clamp(18px,6vw,48px) clamp(22px,5vw,40px)}
+
+.en-tete{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:clamp(28px,8vw,48px)}
+.etiquette{flex:none;margin-top:6px;padding:6px 8px 5px;border-radius:2px;background:var(--bleu);color:#fff;font:600 .8125rem/1 var(--etroit);letter-spacing:.08em}
+.timbres{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:8px}
+.timbre{
+  position:relative;flex:none;width:32px;height:40px;opacity:.35;
+  background:radial-gradient(circle,transparent 2.3px,var(--blanc) 2.8px) -4px -4px/8px 8px;
+  filter:drop-shadow(0 1px 1.5px rgba(27,36,70,.3));
+  transform:rotate(-2deg);
+}
+.timbre:nth-child(even){transform:rotate(1.5deg)}
+.timbre::before{
+  content:attr(data-n);position:absolute;inset:4px;display:grid;place-items:center;
+  background:var(--c);color:#fff;font:italic 400 1rem/1 var(--serif);
+  box-shadow:inset 0 0 0 2px var(--c),inset 0 0 0 3px rgba(255,255,255,.45);
+}
+.timbre.actif,.timbre.oblitere{opacity:1}
+.tampon{
+  position:absolute;right:-10px;top:-2px;width:64px;height:44px;
+  fill:none;stroke:var(--encre);stroke-width:1.5;opacity:.7;
+  transform:rotate(-8deg);pointer-events:none;
+}
+.frappe .tampon{animation:frappe .3s cubic-bezier(.3,1.5,.5,1) both}
+@keyframes frappe{from{opacity:0;transform:rotate(-8deg) scale(1.7)}}
+
+h1{font:italic 400 clamp(2.25rem,9.5vw,3.75rem)/1.05 var(--serif);letter-spacing:-.02em;margin-bottom:.45em}
+h2{font:italic 400 clamp(1.5rem,6vw,2.25rem)/1.15 var(--serif);margin-bottom:.55em}
+.texte{white-space:pre-line;max-width:34em}
+.texte.vers{white-space:normal}
+.texte.vers span{display:block;padding-left:1.25em;text-indent:-1.25em}
+.chiffre{
+  display:inline-block;margin-top:1.3em;padding:.35em .7em .3em;
+  background:var(--blanc);box-shadow:0 1px 2px rgba(27,36,70,.18);
+  font:500 clamp(1.125rem,4.6vw,1.6rem)/1.45 var(--etroit);letter-spacing:.06em;word-spacing:.2em;overflow-wrap:anywhere;white-space:pre-line;
+}
+.photo{display:block;max-width:100%;height:auto;margin-top:1.3em;border:6px solid var(--blanc);box-shadow:0 2px 8px rgba(27,36,70,.25)}
+.ps{margin-top:1.8em;display:grid;gap:.45em;font-style:italic}
+.ps span{margin-right:.45em;font:600 1rem/1 var(--etroit);color:var(--rouge)}
+
+.champ{display:flex;align-items:flex-end;gap:12px;margin-top:2em}
+.champ input{
+  flex:1;min-width:0;padding:.3em 0;border:0;border-bottom:1.5px solid var(--encre);border-radius:0;
+  background:transparent;color:var(--encre);font:inherit;font-size:1.125em;
+}
+.champ input::placeholder{color:var(--encre-pale);font-style:italic;opacity:1}
+.champ input:focus{outline:none;border-bottom-color:var(--bleu);box-shadow:0 1.5px 0 var(--bleu)}
+.champ.code input{font-family:var(--etroit);font-weight:500;letter-spacing:.08em;text-transform:uppercase}
+.champ.code input::placeholder{text-transform:none;letter-spacing:0;font-style:normal}
+.bouton{
+  flex:none;padding:.75em 1.15em;border:0;border-radius:2px;cursor:pointer;
+  background:var(--bleu);color:#fff;font:600 1.0625rem/1 var(--etroit);letter-spacing:.02em;
+}
+.bouton:hover{background:#17327a}
+.bouton:active{transform:translateY(1px)}
+.bouton:disabled{opacity:.55;cursor:progress}
+.bouton.seul{margin-top:1.8em}
+:focus-visible{outline:2px solid var(--rouge);outline-offset:3px}
+.champ input:focus-visible{outline:none}
+.retour{min-height:1.65em;margin-top:.55em;font-style:italic;color:var(--rouge)}
+.retour.ok{color:var(--bleu)}
+.secoue{animation:secoue .4s}
+@keyframes secoue{20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+
+.zone-code{margin-top:.4em}
+.zone-code summary{
+  display:inline-block;cursor:pointer;list-style:none;color:var(--encre-pale);
+  font:500 1rem/1.4 var(--etroit);text-decoration:underline dotted;text-underline-offset:4px;
+}
+.zone-code summary::-webkit-details-marker{display:none}
+.zone-code[open] summary{color:var(--encre)}
+.zone-code .champ{margin-top:.6em}
+
+/* Révélation finale : le seul moment orchestré */
+.final{color:var(--pelure);padding:0 14px}
+.final p.ligne{font:italic 400 clamp(1.5rem,6.2vw,2.25rem)/1.25 var(--serif);margin-bottom:.45em}
+.ligne{opacity:0;animation:revele 1s cubic-bezier(.2,.7,.2,1) forwards;animation-delay:calc(var(--i) * 1.2s + .3s)}
+@keyframes revele{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+
+.billet{margin-top:1.4em;border-radius:10px;overflow:hidden;background:var(--blanc);color:var(--encre);font-family:var(--etroit);box-shadow:0 28px 50px -26px #000}
+.billet-tete{padding:.85rem 1.1rem;background:var(--bleu);color:#fff;font:600 1rem/1 var(--etroit);letter-spacing:.04em}
+.billet-trajet{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:.5em;padding:1.1rem 1.1rem 1rem}
+.billet-trajet>div:last-child,.billet-pied>div:last-child{text-align:right}
+.billet span{display:block;font-size:.9375rem;line-height:1.3;color:var(--encre-pale)}
+.billet strong{display:block;font-size:clamp(2.75rem,13vw,3.75rem);font-weight:600;line-height:1}
+.billet strong+span{margin-top:.15em;font-size:1.25rem;color:var(--encre)}
+.avion{display:flex;align-items:center;gap:6px;color:var(--rouge)}
+.avion::before,.avion::after{content:"";width:clamp(8px,4vw,28px);border-top:1.5px dashed currentColor;opacity:.6}
+.avion svg{width:26px;height:26px;fill:currentColor;transform:rotate(90deg)}
+.billet-pied{position:relative;display:flex;justify-content:space-between;padding:.9rem 1.1rem 1.1rem;border-top:2px dashed rgba(27,36,70,.2);font-size:1.375rem;font-weight:500;line-height:1.2}
+.billet-pied::before,.billet-pied::after{content:"";position:absolute;top:-10px;width:18px;height:18px;border-radius:50%;background:var(--nuit)}
+.billet-pied::before{left:-9px}
+.billet-pied::after{right:-9px}
+
+.charge{color:var(--pelure);font-style:italic;text-align:center}
+.charge code{font-family:var(--etroit);font-style:normal}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .ligne{opacity:1}
+}
+</style>
+</head>
+<body>
+<main id="app"><noscript><p class="charge">Active JavaScript pour lire cette lettre.</p></noscript></main>
+<script src="data.js"></script>
+<script>
+(() => {
+  'use strict';
+  const app = document.getElementById('app');
+  const J = window.JEU;
+  const $ = s => app.querySelector(s);
+  const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
+  // Même normalisation que creer_jeu.py : minuscules, sans accents, espaces ni ponctuation.
+  const norm = s => String(s).toLowerCase().replace(/œ/g, 'oe').replace(/æ/g, 'ae').replace(/ß/g, 'ss')
+    .normalize('NFD').replace(/[^a-z0-9]/g, '');
+  const txt = s => esc(String(s ?? '').replace(/'/g, '\u2019'));  // apostrophes typographiques
+  const octets = b64 => Uint8Array.from(atob(b64), c => c.charCodeAt(0));
+  const pause = ms => new Promise(r => setTimeout(r, ms));
+
+  if (!J) return message('Il manque data.js. Lance <code>python creer_jeu.py</code>, puis recharge la page.');
+  if (!(window.crypto && crypto.subtle)) return message('Cette page doit être ouverte en https.');
+  document.title = J.titre.replace(/'/g, '\u2019');
+
+  const STOCKAGE = 'lettre:' + location.pathname.replace(/index\.html$/, '');
+  const etat = { commence: false, reponses: [], codes: [] };   // ce qui est sauvegardé
+  const jeu = { courant: J.depart, indices: [], final: null };  // reconstruit à chaque visite
+
+  // ── Déchiffrement : la bonne réponse est la clé du contenu suivant ──
+  const cles = new Map();
+  function deriver(m) {
+    if (!cles.has(m)) {
+      cles.set(m, crypto.subtle.importKey('raw', new TextEncoder().encode(m), 'PBKDF2', false, ['deriveKey'])
+        .then(base => crypto.subtle.deriveKey(
+          { name: 'PBKDF2', salt: octets(J.sel), iterations: J.iterations, hash: 'SHA-256' },
+          base, { name: 'AES-GCM', length: 256 }, false, ['decrypt'])));
+    }
+    return cles.get(m);
+  }
+  async function ouvrir(saisie, coffres) {
+    const m = norm(saisie);
+    if (!m || !coffres || !coffres.length) return null;
+    let cle;
+    try { cle = await deriver(m); } catch (_) { cles.delete(m); return null; }
+    for (const c of coffres) {
+      try {
+        const clair = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: octets(c.iv) }, cle, octets(c.ct));
+        return JSON.parse(new TextDecoder().decode(clair));
+      } catch (_) { /* pas la bonne clé pour ce coffre */ }
+    }
+    return null;
+  }
+
+  // ── Progression (gardée sur son téléphone) ──
+  function sauver() { try { localStorage.setItem(STOCKAGE, JSON.stringify(etat)); } catch (_) {} }
+  function lire() {
+    try {
+      if (new URLSearchParams(location.search).has('reset')) {
+        localStorage.removeItem(STOCKAGE);
+        history.replaceState(null, '', location.pathname);
+        return null;
+      }
+      return JSON.parse(localStorage.getItem(STOCKAGE));
+    } catch (_) { return null; }
+  }
+  function ajouterCode(m, p) {
+    if (etat.codes.includes(m)) return false;
+    etat.codes.push(m);
+    if (p.type === 'final') jeu.final = p; else jeu.indices.push(p);
+    return true;
+  }
+  async function restaurer() {
+    const s = lire();
+    if (!s) return;
+    etat.commence = !!s.commence;
+    for (const r of s.reponses || []) {
+      const suivant = await ouvrir(r, J.portes[etat.reponses.length]);
+      if (!suivant) break;
+      etat.reponses.push(r);
+      jeu.courant = suivant;
+    }
+    for (const c of s.codes || []) {
+      const p = await ouvrir(c, J.codes);
+      if (p) ajouterCode(c, p);
+    }
+  }
+
+  // ── Écrans ──
+  const TAMPON = '<svg class="tampon" viewBox="0 0 64 44" aria-hidden="true"><circle cx="44" cy="22" r="13"/><circle cx="44" cy="22" r="9.5"/><path d="M2 15q3.5-3 7 0t7 0t7 0t7 0M2 22q3.5-3 7 0t7 0t7 0t7 0M2 29q3.5-3 7 0t7 0t7 0t7 0"/></svg>';
+  const AVION = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>';
+  const postScriptum = i => 'P.-' + 'P.-'.repeat(i) + 'S.';
+
+  function message(html) { app.innerHTML = `<p class="charge">${html}</p>`; }
+  const lettre = contenu => `<article class="lettre"><div class="feuille">${contenu}</div></article>`;
+  const enTete = (resolues, actif) => `
+    <div class="en-tete" aria-hidden="true">
+      <span class="etiquette">PAR AVION</span>
+      <div class="timbres">${Array.from({ length: J.total }, (_, i) => {
+        const cls = i < resolues ? ' oblitere' : (actif === 'tous' || i === actif) ? ' actif' : '';
+        return `<span class="timbre${cls}" data-n="${i + 1}" style="--c:var(${i % 2 ? '--rouge' : '--bleu'})">${i < resolues ? TAMPON : ''}</span>`;
+      }).join('')}</div>
+    </div>`;
+  const formulaire = (id, invite, action, classe = '') => `
+    <form id="f-${id}" class="champ ${classe}" autocomplete="off" novalidate>
+      <label class="sr" for="${id}">${invite}</label>
+      <input id="${id}" placeholder="${invite}" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="send">
+      <button class="bouton">${action}</button>
+    </form>
+    <p class="retour" id="retour-${id}" role="status"></p>`;
+
+  function ecranIntro() {
+    app.innerHTML = lettre(`
+      ${enTete(0, 'tous')}
+      <h1>${txt(J.titre)}</h1>
+      <p class="texte">${txt(J.intro)}</p>
+      <button class="bouton seul" id="commencer">Commencer</button>`);
+    $('#commencer').addEventListener('click', () => { etat.commence = true; sauver(); afficher(); });
+  }
+
+  function ecranNiveau() {
+    const niv = jeu.courant;
+    const ps = jeu.indices.filter(h => h.niveau === niv.n);
+    app.innerHTML = lettre(`
+      ${enTete(niv.n - 1, niv.n - 1)}
+      <p class="sr">Énigme ${niv.n} sur ${J.total}</p>
+      ${niv.titre ? `<h2>${txt(niv.titre)}</h2>` : ''}
+      ${niv.texte ? `<p class="texte${niv.poeme ? ' vers' : ''}">${niv.poeme ? niv.texte.split('\n').map(l => `<span>${txt(l)}</span>`).join('') : txt(niv.texte)}</p>` : ''}
+      ${niv.code ? `<p class="chiffre">${esc(niv.code)}</p>` : ''}
+      ${niv.image ? `<img class="photo" src="${esc(niv.image)}" alt="">` : ''}
+      ${ps.length ? `<div class="ps">${ps.map((h, i) => `<p><span>${postScriptum(i)}</span>${txt(h.texte)}</p>`).join('')}</div>` : ''}
+      ${formulaire('rep', 'Ta réponse', 'Répondre')}
+      <details class="zone-code"><summary>Entrer un code d’indice</summary>${formulaire('code', 'Code', 'Débloquer', 'code')}</details>`);
+    brancherReponse();
+    brancherCode();
+  }
+
+  function ecranFin() {
+    app.innerHTML = lettre(`
+      ${enTete(J.total, -1)}
+      <p class="texte">${txt(jeu.courant.texte)}</p>
+      ${formulaire('code', 'La clé', 'Ouvrir', 'code')}`);
+    brancherCode();
+  }
+
+  function ecranFinal() {
+    const f = jeu.final;
+    const lignes = String(f.texte || '').split('\n').filter(l => l.trim());
+    const n = lignes.length;
+    app.innerHTML = `
+      <section class="final">
+        ${lignes.map((l, i) => `<p class="ligne" style="--i:${i}">${txt(l)}</p>`).join('')}
+        ${f.billet ? billet(f.billet, n) : ''}
+        ${f.image ? `<img class="photo ligne" style="--i:${n + 1}" src="${esc(f.image)}" alt="">` : ''}
+      </section>`;
+  }
+
+  const billet = (b, i) => `
+    <div class="billet ligne" style="--i:${i}">
+      <p class="billet-tete">Carte d’embarquement</p>
+      <div class="billet-trajet">
+        <div><span>Départ</span><strong>${esc(b.de)}</strong><span>${esc(b.depart)}</span></div>
+        <div class="avion">${AVION}</div>
+        <div><span>Arrivée</span><strong>${esc(b.vers)}</strong><span>${esc(b.arrivee)}</span></div>
+      </div>
+      <div class="billet-pied">
+        <div><span>Date</span>${esc(b.date)}</div>
+        <div><span>Vol</span>${esc(b.vol)}</div>
+      </div>
+    </div>`;
+
+  // ── Actions ──
+  function brancherReponse() {
+    const form = $('#f-rep'), champ = $('#rep'), bouton = form.querySelector('button'), retour = $('#retour-rep');
+    let essais = 0;
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      if (bouton.disabled || !norm(champ.value)) return;
+      bouton.disabled = true;
+      const suivant = await ouvrir(champ.value, J.portes[etat.reponses.length]);
+      if (!suivant) {
+        bouton.disabled = false;
+        essais++;
+        retour.textContent = essais >= 3 ? 'Ce n\u2019est pas ça. Si tu bloques, demande-moi un indice.' : 'Ce n\u2019est pas ça.';
+        secouer(champ);
+        return;
+      }
+      etat.reponses.push(norm(champ.value));
+      jeu.courant = suivant;
+      sauver();
+      champ.blur();
+      retour.classList.add('ok');
+      retour.textContent = 'Bonne réponse.';
+      const timbre = app.querySelector('.timbre.actif');
+      if (timbre) { timbre.insertAdjacentHTML('beforeend', TAMPON); timbre.classList.add('oblitere', 'frappe'); }
+      await pause(1100);
+      afficher();
+      window.scrollTo(0, 0);
+    });
+  }
+
+  function brancherCode() {
+    const form = $('#f-code'), champ = $('#code'), bouton = form.querySelector('button');
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      const m = norm(champ.value);
+      if (bouton.disabled || !m) return;
+      bouton.disabled = true;
+      const p = await ouvrir(m, J.codes);
+      bouton.disabled = false;
+      if (!p) {
+        dire($('#retour-code'), 'Ce code n\u2019ouvre rien. Vérifie qu\u2019il est recopié en entier.');
+        secouer(champ);
+        return;
+      }
+      const nouveau = ajouterCode(m, p);
+      sauver();
+      afficher();
+      if (p.type === 'final') return window.scrollTo(0, 0);
+      const ici = p.niveau === jeu.courant.n;
+      const passe = jeu.courant.fin || p.niveau < jeu.courant.n;
+      const zone = app.querySelector('.zone-code');
+      if (zone) zone.open = true;
+      dire($('#retour-code'), !nouveau ? 'Cet indice est déjà débloqué.'
+        : ici ? 'Indice débloqué.'
+        : passe ? 'Cet indice concerne une énigme déjà résolue.'
+        : 'Indice débloqué : il s\u2019affichera quand tu arriveras à son énigme.', nouveau && !passe);
+    });
+  }
+
+  function dire(el, texte, ok) { el.textContent = texte; el.classList.toggle('ok', !!ok); }
+  function secouer(el) { el.classList.remove('secoue'); void el.offsetWidth; el.classList.add('secoue'); }
+
+  function afficher() {
+    if (jeu.final) return ecranFinal();
+    if (!etat.commence) return ecranIntro();
+    if (jeu.courant.fin) return ecranFin();
+    ecranNiveau();
+  }
+
+  message('Ouverture de la lettre…');
+  restaurer().catch(() => {}).then(afficher);
+})();
+</script>
+</body>
+</html>
